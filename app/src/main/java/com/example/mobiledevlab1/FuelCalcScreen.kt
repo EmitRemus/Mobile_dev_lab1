@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun FuelCalcScreen() {
-    // UI state for inputs
+    // UI vars for inputs
     var inputC by remember { mutableStateOf("") }
     var inputH by remember { mutableStateOf("") }
     var inputS by remember { mutableStateOf("") }
@@ -47,17 +47,23 @@ fun FuelCalcScreen() {
         val oComb = O * kComb
 
         // Low heat of combustion (MJ/kg)
-        val Qr = 339 * C + 1030 * H - 108.8 * (O - S) - 25 * W
+        val Qr = (339 * C + 1030 * H - 108.8 * (O - S) - 25 * W)/1000
+        val Qd = (Qr + 0.025*W)*100/(100-W)
+        val Qc = (Qr + 0.025*W)*100/(100-W-A)
 
         output = """
-            ➤ Dry Mass Composition:
+            Dry Mass Composition:
             H: %.2f%%, C: %.2f%%, S: %.2f%%, N: %.2f%%, O: %.2f%%
             
-            ➤ Combustible Mass Composition:
+            Combustible Mass Composition:
             H: %.2f%%, C: %.2f%%, S: %.2f%%, N: %.2f%%, O: %.2f%%
             
-            ➤ Net Calorific Value (Qr): %.4f MJ/kg
-        """.trimIndent().format(hDry, cDry, sDry, nDry, oDry, hComb, cComb, sComb, nComb, oComb, Qr)
+            Net Calorific Value (Qr): %.4f MJ/kg
+            
+            Dry Calorific Value (Qd): %.4f MJ/kg
+            
+            Combustion Calorific Value (Qc): %.4f MJ/kg
+        """.trimIndent().format(hDry, cDry, sDry, nDry, oDry, hComb, cComb, sComb, nComb, oComb, Qr, Qd, Qc)
     }
 
     // Layout with inputs and button

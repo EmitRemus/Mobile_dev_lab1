@@ -8,25 +8,25 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun FuelMazutCalcScreen() {
-    var carbon by remember { mutableStateOf("") }
-    var hydrogen by remember { mutableStateOf("") }
-    var oxygen by remember { mutableStateOf("") }
-    var sulfur by remember { mutableStateOf("") }
-    var qCombust by remember { mutableStateOf("") }
-    var moisture by remember { mutableStateOf("") }
-    var ashDry by remember { mutableStateOf("") }
-    var vanadium by remember { mutableStateOf("") }
-    var result by remember { mutableStateOf("") }
+    var C by remember { mutableStateOf("") }
+    var H by remember { mutableStateOf("") }
+    var O by remember { mutableStateOf("") }
+    var S by remember { mutableStateOf("") }
+    var Q by remember { mutableStateOf("") }
+    var W by remember { mutableStateOf("") }
+    var Ash by remember { mutableStateOf("") }
+    var V by remember { mutableStateOf("") }
+    var output by remember { mutableStateOf("") }
 
-    fun calculate() {
-        val Cg = carbon.toDoubleOrNull() ?: 0.0
-        val Hg = hydrogen.toDoubleOrNull() ?: 0.0
-        val Og = oxygen.toDoubleOrNull() ?: 0.0
-        val Sg = sulfur.toDoubleOrNull() ?: 0.0
-        val Qg = qCombust.toDoubleOrNull() ?: 0.0
-        val Wp = moisture.toDoubleOrNull() ?: 0.0
-        val Ad = ashDry.toDoubleOrNull() ?: 0.0
-        val Vg = vanadium.toDoubleOrNull() ?: 0.0
+    fun performCalculation() {
+        val Cg = C.toDoubleOrNull() ?: 0.0
+        val Hg = H.toDoubleOrNull() ?: 0.0
+        val Og = O.toDoubleOrNull() ?: 0.0
+        val Sg = S.toDoubleOrNull() ?: 0.0
+        val Qg = Q.toDoubleOrNull() ?: 0.0
+        val Wp = W.toDoubleOrNull() ?: 0.0
+        val Ad = Ash.toDoubleOrNull() ?: 0.0
+        val Vg = V.toDoubleOrNull() ?: 0.0
 
         val factor = (100 - Wp - Ad) / 100
 
@@ -34,34 +34,35 @@ fun FuelMazutCalcScreen() {
         val Hr = Hg * factor
         val Or = Og * factor
         val Sr = Sg * factor
-        val Qr = Qg * factor
+        val Ar = Ad * (100 - Wp) / 100
         val Vr = Vg * (100 - Wp) / 100
-
-        result = """
-            ➤ Fuel Mazut - Working Mass Composition:
+        val Qr = Qg * factor - 0.025*Wp
+        output = """
+            Fuel Mazut - Working Mass Composition:
             Carbon: %.2f%%
             Hydrogen: %.2f%%
             Oxygen: %.2f%%
             Sulfur: %.2f%%
+            Ash: %.2f%%
             Vanadium: %.2f mg/kg
             Net Calorific Value: %.2f MJ/kg
-        """.trimIndent().format(Cr, Hr, Or, Sr, Vr, Qr)
+        """.trimIndent().format(Cr, Hr, Or, Sr, Ar, Vr, Qr)
     }
 
     Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        FuelInputField("Hydrogen (Hg, %)", hydrogen) { hydrogen = it }
-        FuelInputField("Carbon (Cg, %)", carbon) { carbon = it }
-        FuelInputField("Sulfur (Sg, %)", sulfur) { sulfur = it }
-        FuelInputField("Oxygen (Og, %)", oxygen) { oxygen = it }
-        FuelInputField("Vanadium (Vg, mg/kg)", vanadium) { vanadium = it }
-        FuelInputField("Moisture (Wp, %)", moisture) { moisture = it }
-        FuelInputField("Ash (Ad, %)", ashDry) { ashDry = it }
-        FuelInputField("Low Heat Value (Qdaf, MJ/kg)", qCombust) { qCombust = it }
+        FuelInputField("Hydrogen (Hg, %)", H) { H = it }
+        FuelInputField("Carbon (Cg, %)", C) { C = it }
+        FuelInputField("Sulfur (Sg, %)", S) { S = it }
+        FuelInputField("Oxygen (Og, %)", O) { O = it }
+        FuelInputField("Vanadium (Vg, mg/kg)", V) { V = it }
+        FuelInputField("Moisture (Wp, %)", W) { W = it }
+        FuelInputField("Ash (Ad, %)", Ash) { Ash = it }
+        FuelInputField("Low Heat Value (Qdaf, MJ/kg)", Q) { Q = it }
 
-        Button(onClick = { calculate() }, modifier = Modifier.fillMaxWidth()) {
+        Button(onClick = { performCalculation() }, modifier = Modifier.fillMaxWidth()) {
             Text("Calculate")
         }
 
-        Text(result, modifier = Modifier.padding(top = 16.dp))
+        Text(output, modifier = Modifier.padding(top = 16.dp))
     }
 }
