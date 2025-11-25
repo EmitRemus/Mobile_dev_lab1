@@ -35,9 +35,19 @@ class MainActivity : ComponentActivity() {
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(16.dp)
+
                         ) {
                             Text("Fuel Mazut Calculator")
+                        }
+                        Button(
+                            onClick = {
+                                val intent = Intent(this@MainActivity, GrossEjectionCalcActivity::class.java)
+                                this@MainActivity.startActivity(intent)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text("Gross Ejection Calculator")
                         }
                     }
                 }
