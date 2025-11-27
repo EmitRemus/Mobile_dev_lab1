@@ -25,6 +25,7 @@
         <activity android:name=".FuelCalcActivity" />
         <activity android:name=".FuelMazutCalcActivity" />
         <activity android:name=".GrossEjectionCalcActivity" />
+        <activity android:name=".SolarProfitCalcActivity" />
     </application>
 
 </manifest>

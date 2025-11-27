@@ -49,6 +49,16 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text("Gross Ejection Calculator")
                         }
+                        Button(
+                            onClick = {
+                                val intent = Intent(this@MainActivity, SolarProfitCalcActivity::class.java)
+                                this@MainActivity.startActivity(intent)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text("Solar Panel Profit Calculator")
+                        }
                     }
                 }
             }
