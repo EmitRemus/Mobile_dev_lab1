@@ -59,6 +59,16 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text("Solar Panel Profit Calculator")
                         }
+                        Button(
+                            onClick = {
+                                val intent = Intent(this@MainActivity, ShortCircuitCalcActivity::class.java)
+                                this@MainActivity.startActivity(intent)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text("Short Circuit Calculator")
+                        }
                     }
                 }
             }
