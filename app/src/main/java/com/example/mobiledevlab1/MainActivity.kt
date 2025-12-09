@@ -69,6 +69,26 @@ class MainActivity : ComponentActivity() {
                         ) {
                             Text("Short Circuit Calculator")
                         }
+                        Button(
+                            onClick = {
+                                val intent = Intent(this@MainActivity, SystemReliabilityActivity::class.java)
+                                this@MainActivity.startActivity(intent)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text("System Reliability Calculator")
+                        }
+                        Button(
+                            onClick = {
+                                val intent = Intent(this@MainActivity, SystemLoadActivity::class.java)
+                                this@MainActivity.startActivity(intent)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        ) {
+                            Text("System Load Calculator")
+                        }
                     }
                 }
             }
